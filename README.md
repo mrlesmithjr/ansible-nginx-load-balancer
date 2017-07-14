@@ -1,21 +1,23 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
-  - [Requirements](#requirements)
-  - [Role Variables](#role-variables)
-  - [Dependencies](#dependencies)
-  - [Example Playbook](#example-playbook)
-  - [Usages](#usages)
-    - [HTTP Load Balancing](#http-load-balancing)
-    - [HTTPS Load Balancing](#https-load-balancing)
-      - [SSL Termination](#ssl-termination)
-        - [Self Signed Certs](#self-signed-certs)
-    - [TCP Load Balancing](#tcp-load-balancing)
-    - [UDP Load Balancing](#udp-load-balancing)
-  - [License](#license)
-  - [Author Information](#author-information)
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents**  _generated with [DocToc](https://github.com/thlorenz/doctoc)_
+
+-   [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
+    -   [Requirements](#requirements)
+    -   [Role Variables](#role-variables)
+    -   [Dependencies](#dependencies)
+    -   [Example Playbook](#example-playbook)
+    -   [Usages](#usages)
+        -   [HTTP Load Balancing](#http-load-balancing)
+        -   [HTTPS Load Balancing](#https-load-balancing)
+            -   [SSL Termination](#ssl-termination)
+                -   [Self Signed Certs](#self-signed-certs)
+        -   [TCP Load Balancing](#tcp-load-balancing)
+        -   [UDP Load Balancing](#udp-load-balancing)
+    -   [License](#license)
+    -   [Author Information](#author-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -176,6 +178,12 @@ with this `ansible-nginx-load-balancer` role.
     -   Provides the ability to update `/etc/hosts` with all hosts which are part of the solution
 -   [ansible-keepalived](https://github.com/mrlesmithjr/ansible-keepalived)
     -   Provides the ability to provide the `VIP` for `HA` of multiple `ansible-nginx-load-balancer` nodes.
+
+You can install the above roles using `ansible-galaxy` and the included [requirements](./requirements.yml)
+
+```bash
+ansible-galaxy install -r requirements.yml
+```
 
 ## Example Playbook
 
