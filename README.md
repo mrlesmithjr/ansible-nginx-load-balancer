@@ -1,22 +1,24 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
-  - [Requirements](#requirements)
-  - [Role Variables](#role-variables)
-  - [Dependencies](#dependencies)
-  - [Example Playbook](#example-playbook)
-  - [Usages](#usages)
-    - [HTTP Load Balancing](#http-load-balancing)
-    - [HTTPS Load Balancing](#https-load-balancing)
-      - [SSL Termination](#ssl-termination)
-        - [Self Signed Certs](#self-signed-certs)
-    - [TCP Load Balancing](#tcp-load-balancing)
-    - [UDP Load Balancing](#udp-load-balancing)
-    - [HA (Highly Available) Setup](#ha-highly-available-setup)
-  - [License](#license)
-  - [Author Information](#author-information)
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+-   [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
+    -   [Requirements](#requirements)
+    -   [Role Variables](#role-variables)
+    -   [Dependencies](#dependencies)
+    -   [Example Playbook](#example-playbook)
+    -   [Usages](#usages)
+        -   [HTTP Load Balancing](#http-load-balancing)
+        -   [HTTPS Load Balancing](#https-load-balancing)
+            -   [SSL Termination](#ssl-termination)
+                -   [Self Signed Certs](#self-signed-certs)
+        -   [TCP Load Balancing](#tcp-load-balancing)
+        -   [UDP Load Balancing](#udp-load-balancing)
+        -   [HA (Highly Available) Setup](#ha-highly-available-setup)
+    -   [License](#license)
+    -   [Author Information](#author-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -144,20 +146,20 @@ nginx_load_balancer_ha_key_file_prefix: '/etc/ssl/{{ nginx_load_balancer_ha_prim
 nginx_load_balancer_ha_primary: 'node0'
 
 # Defines SSL cert(s) info
-nginx_load_balancer_ssl:
-  csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
-  enabled: true
-  generate_keys: true
-  private_key_file: '/etc/ssl/private/{{ inventory_hostname }}-key.pem'
-  private_key_size: 4096
-  private_key_type: 'RSA'
-  protocols:
-    - 'TLSv1'
-    - 'TLSv1.1'
-    - 'TLSv1.2'
-  public_key_file: '/etc/ssl/public/{{ inventory_hostname }}-cert.pem'
-  public_key_valid_days: 1825
-  regenerate_keys: false
+nginx_load_balancer_ssl: []
+  # csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
+  # enabled: false
+  # generate_keys: false
+  # private_key_file: '/etc/ssl/private/{{ inventory_hostname }}-key.pem'
+  # private_key_size: 4096
+  # private_key_type: 'RSA'
+  # protocols:
+  #   - 'TLSv1'
+  #   - 'TLSv1.1'
+  #   - 'TLSv1.2'
+  # public_key_file: '/etc/ssl/public/{{ inventory_hostname }}-cert.pem'
+  # public_key_valid_days: 1825
+  # regenerate_keys: false
 
 # Defines the user which NGINX runs as
 nginx_load_balancer_user: 'www-data'
