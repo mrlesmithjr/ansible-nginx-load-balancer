@@ -99,10 +99,21 @@ nginx_load_balancer_includes:
 # Defines a file that will store the process ID of the main process
 ngninx_load_balancer_pid: '/run/nginx.pid'
 
+# Defines if using a highly available setup. i.e. multiple nginx load balancers
+nginx_load_balancer_ha: false
+
+# Defines the prefix path/file for SSL cert(s) when using HA
+## We do this in order to generate the keys on the primary and sync the keys to
+## all other nodes in the HA setup.
+nginx_load_balancer_ha_key_file_prefix: '/etc/ssl/{{ nginx_load_balancer_ha_primary }}'
+
+# Defines the primary host when in HA mode
+nginx_load_balancer_ha_primary: 'node0'
+
 # Defines SSL cert(s) info
 nginx_load_balancer_ssl:
   csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
-  enabled: false
+  enabled: true
   generate_keys: true
   private_key_file: '/etc/ssl/private/{{ inventory_hostname }}-key.pem'
   private_key_size: 4096

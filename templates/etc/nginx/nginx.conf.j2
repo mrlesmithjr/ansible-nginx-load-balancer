@@ -47,8 +47,13 @@ http {
     }
 {%       if item1['ssl']|default(false) %}
     ssl on;
+{%         if not nginx_load_balancer_ha %}
     ssl_certificate {{ nginx_load_balancer_ssl['public_key_file'] }};
     ssl_certificate_key {{ nginx_load_balancer_ssl['private_key_file'] }};
+{%         elif nginx_load_balancer_ha %}
+    ssl_certificate {{ nginx_load_balancer_ha_key_file_prefix }}-cert.pem;
+    ssl_certificate_key {{ nginx_load_balancer_ha_key_file_prefix }}-key.pem;
+{%         endif %}
 {%       endif %}
   }
 {%     endif %}

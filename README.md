@@ -1,23 +1,22 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents**  _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
--   [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
-    -   [Requirements](#requirements)
-    -   [Role Variables](#role-variables)
-    -   [Dependencies](#dependencies)
-    -   [Example Playbook](#example-playbook)
-    -   [Usages](#usages)
-        -   [HTTP Load Balancing](#http-load-balancing)
-        -   [HTTPS Load Balancing](#https-load-balancing)
-            -   [SSL Termination](#ssl-termination)
-                -   [Self Signed Certs](#self-signed-certs)
-        -   [TCP Load Balancing](#tcp-load-balancing)
-        -   [UDP Load Balancing](#udp-load-balancing)
-    -   [License](#license)
-    -   [Author Information](#author-information)
+- [ansible-nginx-load-balancer](#ansible-nginx-load-balancer)
+  - [Requirements](#requirements)
+  - [Role Variables](#role-variables)
+  - [Dependencies](#dependencies)
+  - [Example Playbook](#example-playbook)
+  - [Usages](#usages)
+    - [HTTP Load Balancing](#http-load-balancing)
+    - [HTTPS Load Balancing](#https-load-balancing)
+      - [SSL Termination](#ssl-termination)
+        - [Self Signed Certs](#self-signed-certs)
+    - [TCP Load Balancing](#tcp-load-balancing)
+    - [UDP Load Balancing](#udp-load-balancing)
+    - [HA (Highly Available) Setup](#ha-highly-available-setup)
+  - [License](#license)
+  - [Author Information](#author-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -133,10 +132,21 @@ nginx_load_balancer_includes:
 # Defines a file that will store the process ID of the main process
 ngninx_load_balancer_pid: '/run/nginx.pid'
 
+# Defines if using a highly available setup. i.e. multiple nginx load balancers
+nginx_load_balancer_ha: false
+
+# Defines the prefix path/file for SSL cert(s) when using HA
+## We do this in order to generate the keys on the primary and sync the keys to
+## all other nodes in the HA setup.
+nginx_load_balancer_ha_key_file_prefix: '/etc/ssl/{{ nginx_load_balancer_ha_primary }}'
+
+# Defines the primary host when in HA mode
+nginx_load_balancer_ha_primary: 'node0'
+
 # Defines SSL cert(s) info
 nginx_load_balancer_ssl:
   csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
-  enabled: false
+  enabled: true
   generate_keys: true
   private_key_file: '/etc/ssl/private/{{ inventory_hostname }}-key.pem'
   private_key_size: 4096
@@ -202,6 +212,8 @@ ansible-galaxy install -r requirements.yml
 ### TCP Load Balancing
 
 ### UDP Load Balancing
+
+### HA (Highly Available) Setup
 
 ## License
 
