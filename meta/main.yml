@@ -1,0 +1,17 @@
+galaxy_info:
+  author: your name
+  description: your description
+  license: MIT
+
+  min_ansible_version: 1.2
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - zesty
+
+  galaxy_tags: []
+
+dependencies: []
