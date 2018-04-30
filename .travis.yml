@@ -9,18 +9,18 @@ services:
   - docker
 
 env:
-  - distribution: centos
-    init:        /usr/lib/systemd/systemd
-    version:     7
-  - distribution: fedora
-    init:        /usr/lib/systemd/systemd
-    version:     26
-  - distribution: fedora
-    init:        /usr/lib/systemd/systemd
-    version:     25
-  - distribution: fedora
-    init:        /usr/lib/systemd/systemd
-    version:     24
+  # - distribution: centos
+  #   init:        /usr/lib/systemd/systemd
+  #   version:     7
+  # - distribution: fedora
+  #   init:        /usr/lib/systemd/systemd
+  #   version:     26
+  # - distribution: fedora
+  #   init:        /usr/lib/systemd/systemd
+  #   version:     25
+  # - distribution: fedora
+  #   init:        /usr/lib/systemd/systemd
+  #   version:     24
   - distribution: ubuntu
     init:        /lib/systemd/systemd
     version:     bionic
@@ -30,12 +30,12 @@ env:
   - distribution: ubuntu
     init:        /sbin/init
     version:     trusty
-  - distribution: debian
-    init:        /lib/systemd/systemd
-    version:     stretch
-  - distribution: debian
-    init:        /lib/systemd/systemd
-    version:     jessie
+  # - distribution: debian
+  #   init:        /lib/systemd/systemd
+  #   version:     stretch
+  # - distribution: debian
+  #   init:        /lib/systemd/systemd
+  #   version:     jessie
 
 before_install:
   - 'sudo docker pull ${distribution}:${version}'
