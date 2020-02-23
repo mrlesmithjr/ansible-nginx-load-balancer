@@ -50,6 +50,9 @@
       - "X-Forwarded-Host $remote_addr"
     pri_domain_name: test.vagrant.local
   tasks:
+    - name: Include ansible-bootstrap-python
+      include_role:
+        name: ansible-bootstrap-python
     - name: Include ansible-keepalived
       include_role:
         name: ansible-keepalived
