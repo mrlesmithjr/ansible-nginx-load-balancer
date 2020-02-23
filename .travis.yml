@@ -16,7 +16,7 @@ script:
   # - molecule test --scenario-name debian9
   # - molecule test --scenario-name debian10
   # - molecule test --scenario-name fedora
-  - molecule test --scenario-name ubuntu1604
+  # - molecule test --scenario-name ubuntu1604
   - molecule test --scenario-name ubuntu1804
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
