@@ -1,7 +1,8 @@
 ---
 - name: ssl | Installing Python Modules
   pip:
-    name: ["pyOpenSSL"]
+    name:
+      - pyOpenSSL
     state: present
   become: true
   register: result
@@ -12,10 +13,10 @@
     path: "{{ item|dirname }}"
     state: directory
   become: true
-  with_items:
+  loop:
     - "{{ nginx_load_balancer_ssl['private_key_file'] }}"
     - "{{ nginx_load_balancer_ssl['public_key_file'] }}"
-  when: nginx_load_balancer_ssl['generate_keys']
+  when: nginx_load_balancer_ssl['generate_keys']|bool
 
 - name: ssl | Generating SSL Private Key
   openssl_privatekey:
@@ -27,10 +28,10 @@
   become: true
   register: _nginx_load_balancer_ssl_priv_key
   when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-    (not nginx_load_balancer_ha or
-      (nginx_load_balancer_ha and
-        inventory_hostname == nginx_load_balancer_ha_primary ))
+    nginx_load_balancer_ssl['generate_keys']|bool and
+    (not nginx_load_balancer_ha|bool or
+    (nginx_load_balancer_ha|bool and
+    inventory_hostname == nginx_load_balancer_ha_primary ))
 
 # This module is included in Ansible 2.4 so for now it is included in library/
 - name: ssl | Generating SSL CSR
@@ -42,10 +43,10 @@
   become: true
   register: _nginx_load_balancer_ssl_csr
   when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-    (not nginx_load_balancer_ha or
-      (nginx_load_balancer_ha and
-        inventory_hostname == nginx_load_balancer_ha_primary ))
+    nginx_load_balancer_ssl['generate_keys']|bool and
+    (not nginx_load_balancer_ha|bool or
+    (nginx_load_balancer_ha|bool and
+    inventory_hostname == nginx_load_balancer_ha_primary ))
 
 # The below module does not work as expected
 # - name: ssl | Generating SSL Public Key
@@ -57,7 +58,7 @@
 #   become: true
 #   when: nginx_load_balancer_ssl['generate_keys']
 
-- name: ssl | Generating SSL Public Key
+- name: ssl | Generating SSL Public Key # noqa 503
   command: >
     openssl req
     -x509
@@ -66,13 +67,11 @@
     -in {{ nginx_load_balancer_ssl['csr_key_file'] }}
     -out {{ nginx_load_balancer_ssl['public_key_file'] }}
   become: true
-  tags:
-    - skip_ansible_lint
   when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-    (not nginx_load_balancer_ha or
-      (nginx_load_balancer_ha and
-        inventory_hostname == nginx_load_balancer_ha_primary )) and
+    nginx_load_balancer_ssl['generate_keys']|bool and
+    (not nginx_load_balancer_ha|bool or
+    (nginx_load_balancer_ha|bool and
+    inventory_hostname == nginx_load_balancer_ha_primary )) and
     (_nginx_load_balancer_ssl_priv_key['changed'] or
     _nginx_load_balancer_ssl_csr['changed'])
 
@@ -83,10 +82,10 @@
     src: "{{ nginx_load_balancer_ssl['private_key_file'] }}"
   become: true
   register: _nginx_load_balancer_ssl_priv_key_
-  when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-      (nginx_load_balancer_ha and
-        inventory_hostname == nginx_load_balancer_ha_primary )
+  when:
+    - nginx_load_balancer_ssl['generate_keys']|bool
+    - nginx_load_balancer_ha|bool
+    - inventory_hostname == nginx_load_balancer_ha_primary
 
 # We capture the ha primary public key in order to sync to all other load
 # balancers. This will ensure that all load balancers use the same key for SSL.
@@ -95,10 +94,10 @@
     src: "{{ nginx_load_balancer_ssl['public_key_file'] }}"
   become: true
   register: _nginx_load_balancer_ssl_pub_key_
-  when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-      (nginx_load_balancer_ha and
-        inventory_hostname == nginx_load_balancer_ha_primary )
+  when:
+    - nginx_load_balancer_ssl['generate_keys']|bool
+    - nginx_load_balancer_ha|bool
+    - inventory_hostname == nginx_load_balancer_ha_primary
 
 # We now sync the ha primary private key to all load balancers. This will ensure
 # that all load balancers are configured to use the same key for SSL.
@@ -107,9 +106,9 @@
     src: key.j2
     dest: "{{ nginx_load_balancer_ha_key_file_prefix + '-key.pem' }}"
   become: true
-  when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-    nginx_load_balancer_ha
+  when:
+    - nginx_load_balancer_ssl['generate_keys']|bool
+    - nginx_load_balancer_ha|bool
 
 # We now sync the ha primary public key to all load balancers. This will ensure
 # that all load balancers are configured to use the same key for SSL.
@@ -118,6 +117,6 @@
     src: cert.j2
     dest: "{{ nginx_load_balancer_ha_key_file_prefix + '-cert.pem' }}"
   become: true
-  when: >
-    nginx_load_balancer_ssl['generate_keys'] and
-    nginx_load_balancer_ha
+  when:
+    - nginx_load_balancer_ssl['generate_keys']|bool
+    - nginx_load_balancer_ha|bool

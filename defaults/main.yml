@@ -113,7 +113,7 @@ nginx_load_balancer_ha_primary: node0
 
 # Defines SSL cert(s) info
 nginx_load_balancer_ssl:
-  []
+  {}
   # csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
   # enabled: false
   # generate_keys: false

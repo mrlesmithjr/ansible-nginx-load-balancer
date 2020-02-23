@@ -1,3 +1,4 @@
 ---
 - src: https://github.com/mrlesmithjr/ansible-etc-hosts
 - src: https://github.com/mrlesmithjr/ansible-keepalived
+- src: https://github.com/mrlesmithjr/ansible-bootstrap-python.git
