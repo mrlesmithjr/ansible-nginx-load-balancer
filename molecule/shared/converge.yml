@@ -12,22 +12,46 @@
             backend_listen_port: 53
           - server: 8.8.4.4
             backend_listen_port: 53
+      - name: web_app
+        frontend_listen_port: 80
+        location: /
+        method: round_robin
+        protocol: http
+        server_name:
+          - test.vagrant.local
+        ssl: false
+        upstream:
+          - server: 192.168.250.11
+            backend_listen_port: 80
+            options:
+              - "fail_timeout=10s"
+              - "max_conns=0"
+              - "weight=1"
+          - server: 192.168.250.12
+            backend_listen_port: 80
+            options:
+              - backup
+              - "fail_timeout=10s"
+              - "max_conns=0"
+              - "weight=1"
     nginx_load_balancer_ssl:
-      {}
-      # csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
-      # enabled: false
-      # generate_keys: false
-      # private_key_file: "/etc/ssl/private/{{ inventory_hostname }}-key.pem"
-      # private_key_size: 4096
-      # private_key_type: RSA
-      # protocols:
-      #   - TLSv1
-      #   - TLSv1.1
-      #   - TLSv1.2
-      # public_key_file: "/etc/ssl/public/{{ inventory_hostname }}-cert.pem"
-      # public_key_valid_days: 1825
-      # regenerate_keys: false
+      csr_key_file: "/etc/ssl/{{ inventory_hostname }}-csr.pem"
+      enabled: true
+      generate_keys: true
+      private_key_file: "/etc/ssl/private/{{ inventory_hostname }}-key.pem"
+      private_key_size: 4096
+      private_key_type: RSA
+      protocols:
+        - TLSv1
+        - TLSv1.1
+        - TLSv1.2
+      public_key_file: "/etc/ssl/public/{{ inventory_hostname }}-cert.pem"
+      public_key_valid_days: 1825
+      regenerate_keys: false
   tasks:
+    - name: Include ansible-bootstrap-python
+      include_role:
+        name: ansible-bootstrap-python
     - name: Include ansible-nginx-load-balancer
       include_role:
         name: ansible-nginx-load-balancer
