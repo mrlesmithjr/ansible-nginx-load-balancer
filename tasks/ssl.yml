@@ -58,7 +58,7 @@
 #   become: true
 #   when: nginx_load_balancer_ssl['generate_keys']
 
-- name: ssl | Generating SSL Public Key
+- name: ssl | Generating SSL Public Key # noqa 503
   command: >
     openssl req
     -x509
