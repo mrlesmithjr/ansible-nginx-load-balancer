@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed|comment }}
 
 pid {{ ngninx_load_balancer_pid }};
 user {{ nginx_load_balancer_user }};
@@ -38,12 +38,11 @@ http {
     listen {{ item1['frontend_listen_port'] }}{% if item1['ssl']|default(false) %} ssl{% endif %};
     server_name {{ item1['server_name']|join(' ') }};
     location {{ item1['location'] }} {
-{%       if nginx_load_balancer_headers is defined %}
-{%         for item2 in nginx_load_balancer_headers %}
-      proxy_set_header {{ item2 }};
+{%       if item1['options'] is defined %}
+{%         for item2 in item1['options'] %}
+      {{ item2 }};
 {%         endfor %}
 {%       endif %}
-      proxy_pass {{ item1['protocol'] }}://{{ item1['name'] }};
     }
 {%       if item1['ssl']|default(false) %}
     ssl on;
