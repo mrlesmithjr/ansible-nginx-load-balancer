@@ -16,6 +16,7 @@
         frontend_listen_port: 80
         locations:
           - location: /
+            options: []
         method: round_robin
         protocol: http
         server_name:
