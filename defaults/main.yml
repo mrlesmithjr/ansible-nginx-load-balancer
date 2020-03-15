@@ -37,6 +37,22 @@
 ### backend_listen_port
 #### Define the backend listen port which application is listening on
 nginx_load_balancer_configs: []
+# - name: "{{ inventory_hostname_short+'-letsencrypt' }}"
+#   frontend_listen_port: 80
+#   locations:
+#     - location: /.well-known/acme-challenge
+#       options:
+#         - root /var/www/letsencrypt
+#         - try_files $uri $uri/ =404
+#     - location: /
+#       options:
+#         - "rewrite ^ https://{{ ssl_domain_name }}$request_uri? permanent"
+#   method: round_robin
+#   protocol: http
+#   server_name:
+#     - "{{ ssl_domain_name }}"
+#   ssl: false
+#   upstream: []
 # - name: google_dns
 #   frontend_listen_port: 53
 #   method: round_robin
@@ -48,16 +64,17 @@ nginx_load_balancer_configs: []
 #       backend_listen_port: 53
 # - name: web_app
 #   frontend_listen_port: 80
-#   location: /
+#   locations:
+#     - location: /
+#       options:
+#         - proxy_buffering off
+#         - proxy_http_version 1.1
+#         - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+#         - "proxy_set_header Upgrade $http_upgrade"
+#         - "proxy_set_header Connection $http_connection"
+#         - access_log off
+#         - proxy_pass http://127.0.0.1:8080
 #   method: round_robin
-#   options:
-#     - proxy_buffering off
-#     - proxy_http_version 1.1
-#     - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
-#     - "proxy_set_header Upgrade $http_upgrade"
-#     - "proxy_set_header Connection $http_connection"
-#     - access_log off
-#     - proxy_pass http://127.0.0.1:8080
 #   protocol: http
 #   server_name:
 #     - test.vagrant.local
