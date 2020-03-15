@@ -1,3 +1,27 @@
+commit 64568550e3f89a5464beb0cd35c7c99ce762817f
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Mar 14 22:30:38 2020 -0400
+
+    Fixing Molecule testing
+
+commit 7b82e6ca75f93e3814247f7dc47aa3a63f26eae4
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Mar 14 22:24:14 2020 -0400
+
+    Fixing test converge playbook
+
+commit df0b2b2187d8df5c5bf43fa53ba527ef16ff4d6d
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Sat Mar 14 22:15:07 2020 -0400
+
+    Added: New functionality for defining multiple locations
+
+commit eceaa2ba7d6c2093123c3d50002d99225ac377cd
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Mar 13 01:01:29 2020 -0400
+
+    Updated: changelog
+
 commit c297a80aca6ea133ebbd07fe3e08d94c61e55527
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Fri Mar 13 01:00:52 2020 -0400

@@ -41,9 +41,11 @@ http {
     server_name {{ item1['server_name']|join(' ') }};
 {%       for location in item1['locations'] %}
     location {{ location['location'] }} {
-{%         for option in location['options'] %}
+{%         if location['options'] is defined and location['options'] != [] %}
+{%           for option in location['options'] %}
       {{ option }};
-{%         endfor %}
+{%           endfor %}
+{%         endif %}
     }
 {%       endfor %}
 {%       if item1['ssl']|default(false) %}
