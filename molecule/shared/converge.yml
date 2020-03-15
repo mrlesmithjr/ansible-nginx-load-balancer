@@ -14,7 +14,8 @@
             backend_listen_port: 53
       - name: web_app
         frontend_listen_port: 80
-        location: /
+        locations:
+          - location: /
         method: round_robin
         protocol: http
         server_name:
