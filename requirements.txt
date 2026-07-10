@@ -1,7 +1,7 @@
-# Python requirements for executing
-ansible
-ansible-lint
-docker
-flake8
-molecule
-testinfra
+# Pinned to versions verified to run on Python 3.11 (see issue #7).
+# ansible-core 2.9/molecule 3.0.4 no longer install on current Python
+# versions, so this is a minimal bump rather than a pip-compile lock.
+ansible==11.9.0
+molecule==25.6.0
+molecule-plugins[docker]==25.8.12
+docker==7.2.0

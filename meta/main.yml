@@ -6,6 +6,8 @@ galaxy_info:
   license: MIT
 
   min_ansible_version: 2.5
+  role_name: nginx_load_balancer
+  namespace: mrlesmithjr
 
   platforms:
     - name: Ubuntu
